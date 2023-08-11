@@ -2,25 +2,25 @@ package com.example.task.view.activities
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.coroutineScope
 import com.example.task.R
 import com.example.task.databinding.ActivityRegisterBinding
 import com.example.task.model.User
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
+import com.example.task.utils.displayToast
+import com.example.task.viewmodel.AuthViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class RegisterActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityRegisterBinding
-
-    private var databaseReference: DatabaseReference? = null
-    private var firebaseDatabase: FirebaseDatabase? = null
-    private var mAuth: FirebaseAuth? = null
     var generTxt: String? = "Male"
+    private val authViewModel: AuthViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,11 +28,23 @@ class RegisterActivity : AppCompatActivity() {
         binding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        //Get Firebase auth instance
-        mAuth = FirebaseAuth.getInstance();
-        firebaseDatabase = FirebaseDatabase.getInstance();
-        databaseReference = firebaseDatabase!!.getReference("user")
+        lifecycle.coroutineScope.launchWhenCreated {
+            authViewModel.user.collect {
+                if (it.isLoading) {
+                    binding.progress.visibility = View.VISIBLE
+                }
+                if (it.error.isNotBlank()) {
+                    binding.progress.visibility = View.GONE
+                    this@RegisterActivity.displayToast(it.error)
+                }
+                it.data?.let {
+                    binding.progress.visibility = View.GONE
+                    startActivity(Intent(this@RegisterActivity, NavigationActivity::class.java))
+                }
+            }
+        }
 
+        ///Regster button onclick
         binding.regBtn.setOnClickListener {
             addData()
         }
@@ -65,24 +77,35 @@ class RegisterActivity : AppCompatActivity() {
         val city = binding.cityEdit.text.toString()
         val password = binding.passwordEdit.text.toString()
 
-        mAuth?.createUserWithEmailAndPassword(email, password)?.addOnCompleteListener(this) {
-            if (it.isSuccessful) {
-                val userData = User(name, mobile, email, generTxt, state, city, password)
-                FirebaseDatabase.getInstance().getReference("user")
-                    .child(FirebaseAuth.getInstance().currentUser!!.uid).setValue(userData)
-                    .addOnCompleteListener {
-                        Toast.makeText(
-                            this@RegisterActivity,
-                            "Successful Registered",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                        val intent = Intent(this@RegisterActivity, LoginActivity::class.java)
-                        startActivity(intent)
-                        finish()
+        if (name.isNotEmpty()) {
+            if (mobile.isNotEmpty()) {
+                if (state.isNotEmpty()) {
+                    if (city.isNotEmpty()) {
+                        if (password.isNotEmpty()) {
+                            val userData = User(
+                                name,
+                                mobile,
+                                email,
+                                generTxt,
+                                state,
+                                city,
+                                password
+                            )
+                            authViewModel.register(email, password, userData)
+                        } else {
+                            Toast.makeText(this, "Please enter password", Toast.LENGTH_SHORT).show()
+                        }
+                    } else {
+                        Toast.makeText(this, "Please enter city", Toast.LENGTH_SHORT).show()
                     }
+                } else {
+                    Toast.makeText(this, "Please enter state", Toast.LENGTH_SHORT).show()
+                }
             } else {
-                Toast.makeText(this, "Singed Up Failed!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Please enter mobile", Toast.LENGTH_SHORT).show()
             }
+        } else {
+            Toast.makeText(this, "Please enter name", Toast.LENGTH_SHORT).show()
         }
     }
 }

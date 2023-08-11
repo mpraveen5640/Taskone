@@ -2,4 +2,14 @@
     <string name="app_name">Task</string>
     <string name="signin">SignIn</string>
     <string name="signup">SignUp</string>
+    <string name="email_id">Email ID</string>
+    <string name="password">Password</string>
+    <string name="new_user_register_here">New User? Register Here</string>
+    <string name="name">Name</string>
+    <string name="mobile">Mobile</string>
+    <string name="state">State</string>
+    <string name="city">City</string>
+    <string name="gener">Gener</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
 </resources>
