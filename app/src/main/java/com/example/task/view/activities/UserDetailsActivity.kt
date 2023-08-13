@@ -14,15 +14,17 @@ class UserDetailsActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        window.statusBarColor = ContextCompat.getColor(this, R.color.yellow)
         binding = ActivityUserDetailsBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        setTitle("User Details")
+
         setSupportActionBar(binding.toolbar)
         getSupportActionBar()?.setDisplayHomeAsUpEnabled(true)
         getSupportActionBar()?.setDisplayShowHomeEnabled(true)
 
         userDetails = intent.getSerializableExtra("userresponse") as User
 
+        setTitle(userDetails.name)
         if (userDetails.gener.equals("Male")) {
             binding.cardColorLoyout.setBackgroundTintList(
                 ContextCompat.getColorStateList(
@@ -30,7 +32,7 @@ class UserDetailsActivity : AppCompatActivity() {
                     R.color.green
                 )
             )
-            binding.generTxt.setText("Male")
+            binding.generTxt.setText(getString(R.string.male))
             binding.generTxt.setTextColor(ContextCompat.getColor(this, R.color.green))
         } else {
             binding.cardColorLoyout.setBackgroundTintList(
@@ -39,7 +41,7 @@ class UserDetailsActivity : AppCompatActivity() {
                     R.color.red
                 )
             )
-            binding.generTxt.setText("Female")
+            binding.generTxt.setText(getString(R.string.female))
             binding.generTxt.setTextColor(ContextCompat.getColor(this, R.color.red))
         }
 

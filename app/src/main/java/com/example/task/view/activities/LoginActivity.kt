@@ -39,6 +39,7 @@ class LoginActivity : AppCompatActivity() {
                 it.data?.let {
                     binding.progress.visibility = View.GONE
                     startActivity(Intent(this@LoginActivity, NavigationActivity::class.java))
+                    finishAffinity()
                 }
             }
         }

@@ -21,43 +21,64 @@ constructor(
     private var authRepository: AuthRepository,
 ) : ViewModel() {
 
-    private val _user = MutableStateFlow(AuthState())
-    val user: StateFlow<AuthState> = _user
+    private val userFlow = MutableStateFlow(AuthState())
+    val user: StateFlow<AuthState> = userFlow
 
-    fun login(email: String, password: String) {
-        authRepository.login(email, password).onEach {
-            when (it) {
-                is Resource.Loading -> {
-                    _user.value = AuthState(isLoading = true)
-                }
-
-                is Resource.Error -> {
-                    _user.value = AuthState(error = it.message ?: "")
-                }
-
-                is Resource.Success -> {
-                    _user.value = AuthState(data = it.data)
-                }
-            }
-        }.launchIn(viewModelScope)
-    }
-
+    ///Register viewmodel
     fun register(email: String, password: String, user: User) {
         authRepository.register(email, password, user).onEach {
             when (it) {
                 is Resource.Loading -> {
-                    _user.value = AuthState(isLoading = true)
+                    userFlow.value = AuthState(isLoading = true)
                 }
 
                 is Resource.Error -> {
-                    _user.value = AuthState(error = it.message ?: "")
+                    userFlow.value = AuthState(error = it.message ?: "")
                 }
 
                 is Resource.Success -> {
-                    _user.value = AuthState(data = it.data)
+                    userFlow.value = AuthState(data = it.data)
                 }
             }
         }.launchIn(viewModelScope)
     }
 
+    ///Login viewmodel
+    fun login(email: String, password: String) {
+        authRepository.login(email, password).onEach {
+            when (it) {
+                is Resource.Loading -> {
+                    userFlow.value = AuthState(isLoading = true)
+                }
+
+                is Resource.Error -> {
+                    userFlow.value = AuthState(error = it.message ?: "")
+                }
+
+                is Resource.Success -> {
+                    userFlow.value = AuthState(data = it.data)
+                }
+            }
+        }.launchIn(viewModelScope)
+    }
+
+    ///Logged viewmodel
+    fun loggedUser() {
+
+        authRepository.getLoggedUser().onEach {
+            when (it) {
+                is Resource.Loading -> {
+                    userFlow.value = AuthState(isLoading = true)
+                }
+
+                is Resource.Error -> {
+                    userFlow.value = AuthState(error = it.message ?: "")
+                }
+
+                is Resource.Success -> {
+                    userFlow.value = AuthState(data = it.data)
+                }
+            }
+        }.launchIn(viewModelScope)
+    }
 }

@@ -88,6 +88,7 @@ class ProfileFragment : Fragment() {
             editor.apply()
             val intent = Intent(context, LoginActivity::class.java)
             startActivity(intent)
+            activity?.finish()
         }
         dialog.show()
     }

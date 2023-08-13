@@ -42,7 +42,8 @@
                     android:id="@+id/nameTxt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Name"
+                    android:text="@string/name"
+                    android:textColor="@color/black"
                     android:textSize="@dimen/_15sdp" />
 
                 <TextView
@@ -50,7 +51,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_5sdp"
-                    android:text="Female"
+                    android:text="@string/female"
                     android:textSize="@dimen/_10sdp" />
 
             </LinearLayout>
@@ -60,7 +61,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_5sdp"
-                android:text="7984564723"
+                android:text="@string/mobilevalue"
+                android:textColor="@color/black"
                 android:textSize="@dimen/_15sdp" />
 
             <TextView
@@ -68,7 +70,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_5sdp"
-                android:text="demo@gmail.com"
+                android:text="@string/emailvalue"
+                android:textColor="@color/black"
                 android:textSize="@dimen/_15sdp" />
 
             <TextView
@@ -76,7 +79,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_5sdp"
-                android:text="AP"
+                android:text="@string/state"
+                android:textColor="@color/black"
                 android:textSize="@dimen/_15sdp" />
 
             <TextView
@@ -84,7 +88,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_5sdp"
-                android:text="Nellore"
+                android:text="@string/city"
+                android:textColor="@color/black"
                 android:textSize="@dimen/_15sdp" />
 
         </LinearLayout>

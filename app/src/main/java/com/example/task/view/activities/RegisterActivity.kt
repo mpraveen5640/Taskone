@@ -40,6 +40,7 @@ class RegisterActivity : AppCompatActivity() {
                 it.data?.let {
                     binding.progress.visibility = View.GONE
                     startActivity(Intent(this@RegisterActivity, NavigationActivity::class.java))
+                    finish()
                 }
             }
         }

@@ -86,6 +86,7 @@ class HomeFragment : Fragment() {
                         binding.recyclerView.adapter = HomeListAdapter(
                             activity!!, userList
                         )
+                        binding.nameTxt.text = sharedPreferences.getString(Constants.NAME, "")
                         binding.usersCountTxt.text = "Users: " + userList.size.toString()
                     } else {
                         binding.nodataTxt.visibility = View.VISIBLE

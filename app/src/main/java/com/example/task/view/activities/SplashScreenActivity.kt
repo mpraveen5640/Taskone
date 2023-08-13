@@ -9,11 +9,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.example.task.R
 import com.example.task.databinding.ActivitySplashScreenBinding
+import com.google.firebase.auth.FirebaseAuth
 
 @SuppressLint("CustomSplashScreen")
 class SplashScreenActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySplashScreenBinding
+    private var firebaseAuth: FirebaseAuth = FirebaseAuth.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,12 +23,22 @@ class SplashScreenActivity : AppCompatActivity() {
         binding = ActivitySplashScreenBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        ///Go to actors screen
-        Handler(Looper.getMainLooper()).postDelayed({
-            val intent = Intent(this, LoginActivity::class.java)
-            startActivity(intent)
-            finish()
-        }, 3000)
+        if (firebaseAuth.currentUser != null) {
+            ///Go to navigation screen
+            Handler(Looper.getMainLooper()).postDelayed({
+                val intent = Intent(this, NavigationActivity::class.java)
+                startActivity(intent)
+                finish()
+            }, 3000)
+        } else {
+            ///Go to login screen
+            Handler(Looper.getMainLooper()).postDelayed({
+                val intent = Intent(this, LoginActivity::class.java)
+                startActivity(intent)
+                finish()
+            }, 3000)
+        }
+
     }
 
 }

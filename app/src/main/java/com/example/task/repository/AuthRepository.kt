@@ -27,6 +27,7 @@ constructor() {
         }
     }
 
+    ///Register repository
     fun register(email: String, password: String, user: User): Flow<Resource<FirebaseUser>> = flow {
         emit(Resource.Loading())
 
@@ -48,6 +49,7 @@ constructor() {
         }
     }
 
+    ///Login repository
     fun login(email: String, password: String): Flow<Resource<FirebaseUser>> = flow {
 
         emit(Resource.Loading())
@@ -66,4 +68,19 @@ constructor() {
             emit(Resource.Error(message = e.localizedMessage ?: ""))
         }
     }
+
+    ///Logged repositpry
+    fun getLoggedUser(): Flow<Resource<FirebaseUser>> = flow {
+
+        emit(Resource.Loading())
+
+        if (firebaseAuth.currentUser != null) {
+            loggedOutLiveData.postValue(false)
+            emit(Resource.Success(data = firebaseAuth.currentUser!!))
+        } else {
+            emit(Resource.Error("Not Logged"))
+        }
+
+    }
+
 }
