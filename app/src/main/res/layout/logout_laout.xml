@@ -19,7 +19,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:gravity="center"
-                android:text="Do you want to Logout"
+                android:text="@string/do_you_want_to_logout"
+                android:textColor="@color/black"
                 android:textSize="@dimen/_15sdp" />
 
             <View
@@ -41,17 +42,17 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="No"
+                    android:text="@string/no"
                     android:textColor="@color/red"
                     android:textSize="@dimen/_15sdp" />
-
+ 
                 <TextView
                     android:id="@+id/yesTxt"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="Yes"
+                    android:text="@string/yes"
                     android:textColor="@color/green"
                     android:textSize="@dimen/_15sdp" />
 

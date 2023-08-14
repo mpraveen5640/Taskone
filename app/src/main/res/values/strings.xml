@@ -15,4 +15,7 @@
     <string name="mobilevalue">7845278465</string>
     <string name="users_not_available">Users Not Available</string>
     <string name="emailvalue">demo@gmail.com</string>
+    <string name="do_you_want_to_logout">Do you want to Logout</string>
+    <string name="no">No</string>
+    <string name="yes">Yes</string>
 </resources>
